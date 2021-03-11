@@ -1,0 +1,139 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #0a0a0a;
+  width: 100%;
+  color: #ddd;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+.container {
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* Header Styles */
+.header {
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  border-bottom: 5px solid #ddd;
+  background-color: #000;
+  padding-bottom: 20px;
+  max-height: 200px;
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto;
+}
+.logo {
+  width: 70px;
+  text-align: center;
+}
+.logo img {
+  width: 100%;
+}
+.left {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.left li {
+  display: inline-block;
+  margin: 10px;
+}
+.left a {
+  text-decoration: none;
+  padding: 10px;
+  color: #ddd;
+}
+.left a:hover {
+  background-color: #ddd;
+  color: rgb(117, 3, 3);
+}
+.right {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+.right .btn {
+  width: 100%;
+  display: inline-block;
+  background-color: rgb(117, 3, 3);
+  color: #ddd;
+  border: none;
+  padding: 8px 25px;
+  border-radius: 10px 30px;
+  cursor: pointer;
+}
+.main-content {
+  margin-top: 200px;
+}
+
+.title {
+  background-color: rgba(58,56,56,.685);
+  color: #ddd;
+  padding: 10px;
+  text-align: center;
+  margin: 5px 20px;
+}
+
+/* Footer Styles */
+.footer {
+  margin-top: 50px;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+  background-color: rgb(22, 22, 22);
+  color: #ddd;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .container {
+    width: 80%;
+  }
+  /* Header Styles */
+  .header {
+    padding-bottom: 0;
+  }
+  .nav {
+    flex-direction: row;
+    width: 80%;
+  }
+  .logo {
+    width: 250px;
+  }
+  .left {
+    margin-bottom: 0;
+    width: 100%;
+    text-align: left;
+  }
+  .right {
+    width: 100%;
+    text-align: right;
+  }
+  .right .btn {
+    width: 50%;
+    text-align: center;
+  }
+
+  /* Main Content Styles */
+  .main-content {
+    margin-top: 130px;
+  }
+}
