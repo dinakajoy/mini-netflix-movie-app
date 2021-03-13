@@ -89,7 +89,7 @@ ul {
   color: #ddd;
   padding: 10px;
   text-align: center;
-  margin: 5px 20px;
+  margin: 10px auto;
 }
 
 /* Footer Styles */
@@ -134,6 +134,6 @@ ul {
 
   /* Main Content Styles */
   .main-content {
-    margin-top: 130px;
+    margin-top: 135px;
   }
 }

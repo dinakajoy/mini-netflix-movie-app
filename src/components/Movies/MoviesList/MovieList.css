@@ -1,0 +1,130 @@
+.movies-events {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  margin: 20px auto;
+  width: 100%;
+}
+.search {
+  width: 100%;
+}
+.search input {
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  background-color: transparent;
+  border-radius: 5px;
+  color: #ddd;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.search input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid#ddd;
+  border-left: 2px solid#ddd;
+  background-color: rgb(36, 35, 35);
+}
+.sort i {
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.movie-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  margin-top: 50px;
+}
+.wrapper {
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+.grid-img {
+  width: 100%;
+  height: auto;
+  border: 3px solid rgb(117, 3, 3);
+  position: relative;
+}
+.favourite {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.favourite i {
+  color: rgb(255, 251, 251);
+  font-size: 18px;
+  background-color: rgb(117, 3, 3);
+  padding: 5px;
+}
+.overlay {
+  position: absolute;
+  bottom: 6px;
+  left: 3px;
+  right: 3px;
+  width: (100% - 3px);
+  padding: 20px 0;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.924);
+  color: #ddd;
+  opacity: 1;
+  text-align: center;
+}
+
+@media (min-width: 400px) {
+  .movie-row {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 30px;
+  }
+  .movies-events {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sort {
+    text-align: right;
+  }
+}
+
+@media (min-width: 600px) {
+  .movie-row {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 30px;
+  }
+  .movies-events {
+    grid-template-columns: 70% 29%;
+  }
+}
+@media (min-width: 900px) {
+  .movie-row {
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 30px;
+  }
+}
+
+.custom-pagination {
+  text-align: center;
+  width: 100%;
+  margin: 20px auto 5px auto;
+  background-color: rgba(58, 56, 56, 0.685);
+  padding: 10px;
+}
+.custom-pagination .page-number {
+  display: inline-block;
+  margin: 0px 4px;
+  border-radius: 25px;
+}
+.page-number.current {
+  color: red;
+}
+.page-number span {
+  display: block;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.pagination-previous,.pagination-next{
+  display: inline-block;
+  font-weight: bold;
+}

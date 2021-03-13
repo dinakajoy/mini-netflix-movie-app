@@ -1,6 +1,29 @@
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Header: React.FC  = () => {
+type Props = {
+  isLoggedIn: string
+}
+
+const Header: React.FC<Props> = ({ isLoggedIn }: Props) => {
+
+  const [token, setToken] = useState<string | any>('');
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(token !== null) {
+      setToken(token);
+    } else {
+      setToken('');
+    }
+  }, [token]);
+
+  const logout = (event: React.MouseEvent<HTMLElement>): void => {
+    event.preventDefault();
+    localStorage.clear();
+    setToken('');
+  }
+
   return (
     <header className="header">
         <nav className="nav">
@@ -9,17 +32,14 @@ const Header: React.FC  = () => {
           </NavLink>
 
           <ul className="left">
-            <li><NavLink exact to="/movies" activeClassName="active-navlink">MOVIES</NavLink></li>
-            <li><NavLink exact to="/favourites" activeClassName="active-navlink">MY FAVOURITES</NavLink></li>
+            <li><NavLink to="/movies" activeClassName="active-navlink">MOVIES</NavLink></li>
+            <li><NavLink to="/favourites" activeClassName="active-navlink">MY FAVOURITES</NavLink></li>
           </ul>
 
             {/* <div class="right" *ngIf="!auth.loggedIn"> */}
           <div className="right">
-            <NavLink className="btn" exact to="/signin">SIGN IN</NavLink>
-            {/* <div class="right" *ngIf="auth.loggedIn"> */}
-            
-            {/* <a className="btn" onClick="logout()">SIGN OUT</a> */}
-              {/* <a class="btn" (click)="logout()">SIGN OUT</a> */}
+           { isLoggedIn === '' && <NavLink className="btn" exact to="/signin">SIGN IN</NavLink> }
+           { isLoggedIn !== '' && <button className="btn" onClick={(event: React.MouseEvent<HTMLElement>) => logout(event)}>SIGN OUT</button> }
           </div>
         </nav>
       </header>

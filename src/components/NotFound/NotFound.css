@@ -1,0 +1,28 @@
+.bg {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  padding-top: 80px;
+  line-height: 2;
+}
+.bg img {
+  width: 100%;
+}
+
+.bg  a {
+  color: #ccc;
+  background: #666;
+  padding: 2px 5px;
+}
+img.sm-img {
+  width: 20% !important;
+  text-align:center;
+  border-radius: 50%;
+}
+
+@media only screen and (min-width: 768px) {
+  .bg {
+    grid-template-columns: 1fr 1fr;
+  }
+}
