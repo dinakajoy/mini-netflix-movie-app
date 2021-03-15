@@ -1,6 +1,13 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const Pagination = ({ moviesPerPage, totalMovies, paginate }) => {
+type Props = {
+  moviesPerPage: number;
+  totalMovies: number;
+  paginate: Function;
+}
+
+const Pagination = ({ moviesPerPage, totalMovies, paginate }:Props) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalMovies / moviesPerPage); i++) {
@@ -8,17 +15,18 @@ const Pagination = ({ moviesPerPage, totalMovies, paginate }) => {
   }
 
   return (
-    <nav>
-      <ul className='pagination'>
-        {pageNumbers.map(number => (
-          <li key={number} className='page-item'>
-            <a onClick={() => paginate(number)} href='!#' className='page-link'>
-              {number}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className="pagination">
+      <i className='fa fa-angle-double-left'></i>
+      {pageNumbers.map(number => (
+        // <button key={number} onClick={() => paginate(number)} className='page-link'>
+        //   {number}
+        // </button>
+        <NavLink key={number} to='/' onClick={() => paginate(number)} className='page-link' activeClassName="active-navlink">
+        {number}
+      </NavLink>
+      ))}
+      <i className='fa fa-angle-double-right'></i>
+    </div>
   );
 };
 

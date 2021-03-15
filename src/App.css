@@ -137,3 +137,35 @@ ul {
     margin-top: 135px;
   }
 }
+
+.pagination {
+  text-align: center;
+  width: 100%;
+  margin: 20px auto 5px;
+  background-color: rgba(58,56,56,.685);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pagination a {
+  color: rgb(170, 26, 26);
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.pagination i {
+  padding: 8px 16px;
+}
+.pagination a:hover,
+.pagination a:focus {
+  color: #fff;
+  border: 0;
+  outline: 0;
+}

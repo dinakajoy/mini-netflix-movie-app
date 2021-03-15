@@ -8,7 +8,12 @@ interface IUser {
   password: string;
 };
 
-const Signin: React.FC = () => {
+type Props = {
+  token: string;
+  isLoggedIn: Function;
+}
+
+const Signin: React.FC<Props> = ({ token, isLoggedIn }: Props) => {
 
   let history = useHistory();
 
@@ -45,7 +50,7 @@ const Signin: React.FC = () => {
     } else {
       setError('');
       setError2('');
-      localStorage.setItem("token", result.token);
+      isLoggedIn(result.token, result.userId);
       history.push("/");
     }
   };

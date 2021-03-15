@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import moviesapi from '../../../api/movies.json';
+import IMovie from '../MoviesInterface';
+import { getFavourites, postFavourites } from '../FavouriteMovies/favouriteMoviesServices';
 import Title from '../../common/Title';
 import './Movie.css';
 
@@ -8,18 +10,35 @@ interface ParamTypes {
   movieId: string
 }
 
-const Movie: React.FC = () => {
+type Props = {
+  token: string;
+  signedIn: boolean;
+}
+
+const Movie:React.FC<Props> = ({ token, signedIn }: Props) => {
   let { movieId } = useParams<ParamTypes>();
+
+  const [favMovies, setFavMovies] = useState([]);
   const movie = moviesapi.filter(movie => movie.objectId === movieId);
+  const isFavourite = favMovies.includes(movie[0].objectId, 0);
+
   const getDate = (date:string):string => {
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return `Joined ${monthNames[new Date(date).getMonth()]} ${new Date(date).getDay()}, ${new Date(date).getFullYear()}`;
   };
+  
+  useEffect(() => {
+    if(signedIn) {
+      let userId:string | null = localStorage.getItem('userId');
+      const data: {} = { userId, token };
+      const favMov = getFavourites(data);
+      setFavMovies(favMov);
+    }
+  });
 
   return (
     <>
       <Title title={ movie[0].title } />
-
       <section>
         <div className="movie-wrapper">
           <div className='movie-left'>
