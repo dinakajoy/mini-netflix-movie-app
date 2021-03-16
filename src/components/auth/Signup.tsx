@@ -18,7 +18,7 @@ const Signup: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<IUser>();
 
   const submitForm = async (data: IUser) => {
-    const userRequest = await fetch('http://localhost:5000/user/signup', {
+    const userRequest = await fetch('https://mini-netflix-by-joy.herokuapp.com/user/signup', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

@@ -1,5 +1,5 @@
 // const favMovieUrl = 'https://mini-netflix-by-joy.herokuapp.com/movie';
-const favMovieUrl = 'http://localhost:5000/movie';
+const favMovieUrl = 'https://mini-netflix-by-joy.herokuapp.com/movie';
 
 export const getFavouriteMovie = async (data:any) => {
   try {
