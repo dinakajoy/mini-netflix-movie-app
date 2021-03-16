@@ -73,6 +73,10 @@
   text-align: center;
 }
 
+.fa-close {
+  cursor: pointer;
+}
+
 @media (min-width: 400px) {
   .movie-row {
     grid-template-columns: repeat(2, 1fr);

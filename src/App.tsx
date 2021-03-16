@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import MoviesList from './components/Movies/MoviesList';
@@ -18,8 +19,9 @@ const App: React.FC = () => {
   
   useEffect(() => {
     const getToken:string | null = localStorage.getItem("token");
+    
     if(getToken !== null) {
-      setToken(token);
+      setToken(getToken);
       setSignedIn(true);
     }
   }, [token, signedIn]);
@@ -45,7 +47,8 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/"><MoviesList token={token} signedIn={signedIn} /></Route>
           <Route path="/movies/:movieId"><Movie token={token} signedIn={signedIn} /></Route>
-          <Route path="/favourites" component={FavouriteMovies} />
+          <ProtectedRoute path="/favourites" signedIn={signedIn} token={token} component={FavouriteMovies} />
+          {/* <Route path="/favourites"><FavouriteMovies token={token} /></Route> */}
           <Route path="/signup" component={Signup} />
           <Route path="/signin"><Signin token={token} isLoggedIn={isLoggedIn} /></Route>
           <Route component={NotFound} />

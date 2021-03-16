@@ -51,10 +51,10 @@
 .btn-back {
   background-color: #750303;
   margin: 20px auto;
-  padding: 10px;
+  padding: 15px !important;
   border: none;
   border-radius: 10px;
-  width: 100%;
+  width: 100% !important;
   color: #ddd;
   cursor: pointer;
   display: inline-block;
@@ -76,6 +76,9 @@
 .red {
   font-weight: bolder;
   color: rgb(117, 3, 3);
+}
+.fa-heart {
+  cursor: pointer;
 }
 
 @media (min-width: 400px) {

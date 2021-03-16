@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import moviesapi from '../../../api/movies.json';
 import IMovie from '../MoviesInterface';
-import { getFavourites } from '../FavouriteMovies/favouriteMoviesServices';
+import { getFavouriteMovies } from '../FavouriteMovies/favouriteMoviesServices';
 import Pagination from '../../Pagination';
 import Title from '../../common/Title';
 import './MovieList.css';
@@ -16,7 +16,7 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
   const loadData = ():IMovie[] => JSON.parse(JSON.stringify(moviesapi));
   
   const [movies, setMovies] = useState<IMovie[]>([]);
-  const [favMovies, setFavMovies] = useState([]);
+  const [favMovies, setFavMovies] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [moviesPerPage] = useState<number>(12);
   // Get current posts
@@ -25,13 +25,18 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
   let currentMovies:IMovie[] = movies.slice(indexOfFirstMovie, indexOfLastMovie);
 
   useEffect(() => {
+    setMovies(loadData);
     if(signedIn) {
       let userId:string | null = localStorage.getItem('userId');
       const data: {} = { userId, token };
-      const favMov = getFavourites(data);
+      getFavouriteMovies(data)
+        .then(data => {
+          if(data !== null) {
+            setFavMovies(data);
+          }
+        });
     }
-    setMovies(loadData);
-  }, []);
+  }, [signedIn, token]);
 
   const searchByTitle = (query: string):void => {
     const mv:IMovie[] = loadData();
@@ -68,14 +73,24 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
 
       <section className="movie-row">
         {currentMovies.length > 0 && currentMovies.map((cmovie:any) => (
-          <Link to={`/movies/${cmovie.objectId}`} key={cmovie.objectId} className="wrapper">
+          <div key={cmovie.objectId} className="wrapper">
             <img src={ cmovie.image.url } alt={ cmovie.image.name } title={ cmovie.title } className="grid-img" />
-            <div className="favourite"><i className="fa fa-heart" title="My Favourite"></i></div>
-            <div className="overlay">
-              <h5 className="top">{ cmovie.title }</h5>
-              <small className="bottom">Year: { cmovie.releaseYear }</small>
-            </div>
-          </Link>
+            {(() => {
+              if(signedIn) {
+                for (const movie of favMovies) {
+                  if (movie.movieId === cmovie.objectId) {
+                    return <div className="favourite"><Link to="/favourites"><i className="fa fa-heart" title="My Favourite"></i></Link></div>
+                  }
+                }
+              }
+            })()}
+            <Link to={`/movies/${cmovie.objectId}`}>
+              <div className="overlay">
+                <h4 className="top">{ cmovie.title }</h4>
+                <small className="bottom">Year: { cmovie.releaseYear }</small>
+              </div>
+            </Link>
+          </div>
         )) }
       </section>
 

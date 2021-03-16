@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import moviesapi from '../../../api/movies.json';
-import IMovie from '../MoviesInterface';
-import { getFavourites, postFavourites } from '../FavouriteMovies/favouriteMoviesServices';
+import { getFavouriteMovie, postFavouriteMovie } from '../FavouriteMovies/favouriteMoviesServices';
 import Title from '../../common/Title';
 import './Movie.css';
 
@@ -18,48 +17,68 @@ type Props = {
 const Movie:React.FC<Props> = ({ token, signedIn }: Props) => {
   let { movieId } = useParams<ParamTypes>();
 
-  const [favMovies, setFavMovies] = useState([]);
-  const movie = moviesapi.filter(movie => movie.objectId === movieId);
-  const isFavourite = favMovies.includes(movie[0].objectId, 0);
+  const [isFavMovie, setFavMovie] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const curMovie = moviesapi.filter(movie => movie.objectId === movieId);
 
   const getDate = (date:string):string => {
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return `Joined ${monthNames[new Date(date).getMonth()]} ${new Date(date).getDay()}, ${new Date(date).getFullYear()}`;
   };
+
+  const addToFavouriteMovie = () => {
+    if(signedIn) {
+      let userId:string | null = localStorage.getItem('userId');
+      const data: {} = { userId, token, movieId };
+      postFavouriteMovie(data)
+        .then(data => {
+          setFavMovie(true);
+        })
+        .catch(error => setError(error.message));
+    } else {
+      setError('Please Login To Add Movie To Favourite');
+    }
+  };
+
   
   useEffect(() => {
     if(signedIn) {
       let userId:string | null = localStorage.getItem('userId');
-      const data: {} = { userId, token };
-      const favMov = getFavourites(data);
-      setFavMovies(favMov);
+      const data: {} = { userId, token, movieId };
+      getFavouriteMovie(data)
+        .then(data => {
+          if(data !== null) {
+            if(data.movieId === movieId) {
+              setFavMovie(true);
+            }
+          }
+        });
     }
-  });
+  }, [signedIn, token, movieId]);
 
   return (
     <>
-      <Title title={ movie[0].title } />
+      <Title title={ curMovie[0].title } />
       <section>
         <div className="movie-wrapper">
           <div className='movie-left'>
-            <p><span className="red">RELEASED IN:</span> { movie[0].releaseYear }</p>
-            <p><span className="red">PRODUCED IN:</span> { getDate(movie[0].createdAt) } | Full Episode</p>
+            <p><span className="red">RELEASED IN:</span> { curMovie[0].releaseYear }</p>
+            <p><span className="red">PRODUCED IN:</span> { getDate(curMovie[0].createdAt) } | Full Episode</p>
             <p><span className="red">AUDIO:</span> English</p>
             <p><span className="red">SUBTITLE:</span> English</p>
             <p>
               <span className="red">GENRE:</span>
-              { movie[0].genre.length > 0 && movie[0].genre.map((gen, index) => (
+              { curMovie[0].genre.length > 0 && curMovie[0].genre.map((gen:string, index:number) => (
                 <span key={index} className="badge"> {gen} </span>
               ))}
-              {/* <span class="badge badge-pill badge-secondary" *ngFor="let gen of movie.genre"> {{ gen }} </span> */}
             </p>
             <div className="details">
-              In This Episode: { movie[0].description }
+              In This Episode: { curMovie[0].description }
             </div>
           </div>
 
           <div className='movie-right'>
-            <img src={ movie[0].image.url } alt={ movie[0].image.name } title={ movie[0].title } className="grid-img" />
+            <img src={ curMovie[0].image.url } alt={ curMovie[0].image.name } title={ curMovie[0].title } className="grid-img" />
             <br /><br />
             <div className="movie-right-data">
               <div className="ratings" title="Rating">
@@ -71,17 +90,15 @@ const Movie:React.FC<Props> = ({ token, signedIn }: Props) => {
                   <span className="fa fa-star"></span>
                 </div>
               </div>
-              <div>
-                <i className="fa fa-heart" title="Add To Favourite"></i>
-              </div>
+              { !isFavMovie && <div>
+                <i className="fa fa-heart" title="Add To Favourite" onClick={() => addToFavouriteMovie()}></i>
+              </div> }
             </div>
           </div>
         </div>
 
-        {/* <br><br>
-        <div *ngIf='errorMessage' className='alert alert-danger'>
-            {{ errorMessage }}
-        </div> */}
+        <br /><br />
+        { error && <div className='alert alert-danger'>Please Login To Add Movie To Favourite</div> }
 
         <div className='card-footer'>
           <Link to="/" className='btn-back'>

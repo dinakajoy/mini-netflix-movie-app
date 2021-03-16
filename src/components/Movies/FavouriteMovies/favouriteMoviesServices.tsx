@@ -1,35 +1,56 @@
 // const favMovieUrl = 'https://mini-netflix-by-joy.herokuapp.com/movie';
 const favMovieUrl = 'http://localhost:5000/movie';
 
-export const getFavourites = async (data:{}) => {
-  const res = await fetch(`${favMovieUrl}/${data}`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  const response = await res.json();
-  return response;
+export const getFavouriteMovie = async (data:any) => {
+  try {
+    const res = await fetch(`${favMovieUrl}/${data.movieId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const response = await res.json();
+    return response;
+  } catch(error) {
+    console.log(error);
+  }
 };
 
-export const postFavourites = async (data:{}) => {
-  const res = await fetch(`${favMovieUrl}/${data}`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  const response = await res.json();
-  return response;
+export const getFavouriteMovies = async (data:any) => {
+  try {
+    const res = await fetch(`${favMovieUrl}/all/${data.userId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const response = await res.json();
+    return response;
+  } catch(error) {
+    console.log(error);
+  }
 };
 
-export const delFavourites = async (data:{}) => {
+export const postFavouriteMovie = async (data:{}) => {
   const res = await fetch(`${favMovieUrl}`, {
     method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  const response = await res.json();
+  return response;
+};
+
+export const deleteFavouriteMovie = async (data:any) => {
+  const res = await fetch(`${favMovieUrl}/${data.movieId}`, {
+    method: 'DELETE',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
