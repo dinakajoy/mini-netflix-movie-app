@@ -1,4 +1,4 @@
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -755,13 +755,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       if (mod != null) for (var k in mod) {
         if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
       }
-      result.default = mod;
+      result["default"] = mod;
       return result;
     }
 
     function __importDefault(mod) {
       return mod && mod.__esModule ? mod : {
-        default: mod
+        "default": mod
       };
     }
 
@@ -938,7 +938,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".fixed {\r\n  width: 100%;\r\n  margin: 0 auto;\r\n  overflow: hidden;\r\n  text-align: center;\r\n  position: fixed;\r\n  top: 0;\r\n  z-index: 100;\r\n  border-bottom: 5px solid #ddd;\r\n  background-color: #000;\r\n}\r\n.logo {\r\n  width: 50px;\r\n  text-align: center;\r\n  cursor: pointer;\r\n}\r\n.topnav {\r\n  color: rgb(117, 3, 3);\r\n  width: 100%;\r\n}\r\nul {\r\n  list-style-type: none;\r\n}\r\n.left li {\r\n  display: inline-block;\r\n  margin: 10px auto;\r\n}\r\n.left a {\r\n  text-decoration: none;\r\n  padding: 10px;\r\n  color: #ddd;\r\n}\r\n.left a:hover {\r\n  background-color: #ddd;\r\n  color: rgb(117, 3, 3);\r\n}\r\n.right {\r\n  text-align: center;\r\n  width: 100%;\r\n  margin: 10px;\r\n}\r\n.topnav .btn {\r\n  width: 80%;\r\n  background-color: rgb(117, 3, 3);\r\n  color: #ddd;\r\n  border: none;\r\n  padding: 5px 15px;\r\n  border-radius: 10px 30px;\r\n  cursor: pointer;\r\n}\r\n.main-content {\r\n  margin-top: 150px;\r\n}\r\n.footer {\r\n  margin-top: 50px;\r\n  text-align: center;\r\n  width: 100%;\r\n  padding: 20px;\r\n  background-color: rgb(22, 22, 22);\r\n  color: #ddd;\r\n}\r\n/* Medium devices (landscape tablets, 768px and up) */\r\n@media only screen and (min-width: 768px) {\r\n  .fixed {\r\n    display: -webkit-inline-box;\r\n    display: inline-flex;\r\n    padding: 0 100px;\r\n  }\r\n  .logo {\r\n    width: 100%;\r\n  }\r\n  .topnav {\r\n    display: -webkit-inline-box;\r\n    display: inline-flex;\r\n    padding: 20px;\r\n  }\r\n  .left {\r\n    text-align: left;\r\n    display: inline-block;\r\n    width: 70%;\r\n  }\r\n  .right {\r\n    width: 29%;\r\n    margin: 0px;\r\n  }\r\n  .topnav button {\r\n    padding: 10px 15px;\r\n  }\r\n  .main-content {\r\n    margin-top: 130px;\r\n  }\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0VBQ1gsY0FBYztFQUNkLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLE1BQU07RUFDTixZQUFZO0VBQ1osNkJBQTZCO0VBQzdCLHNCQUFzQjtBQUN4QjtBQUNBO0VBQ0UsV0FBVztFQUNYLGtCQUFrQjtFQUNsQixlQUFlO0FBQ2pCO0FBQ0E7RUFDRSxxQkFBcUI7RUFDckIsV0FBVztBQUNiO0FBQ0E7RUFDRSxxQkFBcUI7QUFDdkI7QUFDQTtFQUNFLHFCQUFxQjtFQUNyQixpQkFBaUI7QUFDbkI7QUFDQTtFQUNFLHFCQUFxQjtFQUNyQixhQUFhO0VBQ2IsV0FBVztBQUNiO0FBQ0E7RUFDRSxzQkFBc0I7RUFDdEIscUJBQXFCO0FBQ3ZCO0FBQ0E7RUFDRSxrQkFBa0I7RUFDbEIsV0FBVztFQUNYLFlBQVk7QUFDZDtBQUNBO0VBQ0UsVUFBVTtFQUNWLGdDQUFnQztFQUNoQyxXQUFXO0VBQ1gsWUFBWTtFQUNaLGlCQUFpQjtFQUNqQix3QkFBd0I7RUFDeEIsZUFBZTtBQUNqQjtBQUNBO0VBQ0UsaUJBQWlCO0FBQ25CO0FBQ0E7RUFDRSxnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLFdBQVc7RUFDWCxhQUFhO0VBQ2IsaUNBQWlDO0VBQ2pDLFdBQVc7QUFDYjtBQUVBLHFEQUFxRDtBQUNyRDtFQUNFO0lBQ0UsMkJBQW9CO0lBQXBCLG9CQUFvQjtJQUNwQixnQkFBZ0I7RUFDbEI7RUFDQTtJQUNFLFdBQVc7RUFDYjtFQUNBO0lBQ0UsMkJBQW9CO0lBQXBCLG9CQUFvQjtJQUNwQixhQUFhO0VBQ2Y7RUFDQTtJQUNFLGdCQUFnQjtJQUNoQixxQkFBcUI7SUFDckIsVUFBVTtFQUNaO0VBQ0E7SUFDRSxVQUFVO0lBQ1YsV0FBVztFQUNiO0VBQ0E7SUFDRSxrQkFBa0I7RUFDcEI7RUFDQTtJQUNFLGlCQUFpQjtFQUNuQjtBQUNGIiwiZmlsZSI6InNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZml4ZWQge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIG1hcmdpbjogMCBhdXRvO1xyXG4gIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIHBvc2l0aW9uOiBmaXhlZDtcclxuICB0b3A6IDA7XHJcbiAgei1pbmRleDogMTAwO1xyXG4gIGJvcmRlci1ib3R0b206IDVweCBzb2xpZCAjZGRkO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICMwMDA7XHJcbn1cclxuLmxvZ28ge1xyXG4gIHdpZHRoOiA1MHB4O1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuLnRvcG5hdiB7XHJcbiAgY29sb3I6IHJnYigxMTcsIDMsIDMpO1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcbnVsIHtcclxuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XHJcbn1cclxuLmxlZnQgbGkge1xyXG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICBtYXJnaW46IDEwcHggYXV0bztcclxufVxyXG4ubGVmdCBhIHtcclxuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XHJcbiAgcGFkZGluZzogMTBweDtcclxuICBjb2xvcjogI2RkZDtcclxufVxyXG4ubGVmdCBhOmhvdmVyIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZGRkO1xyXG4gIGNvbG9yOiByZ2IoMTE3LCAzLCAzKTtcclxufVxyXG4ucmlnaHQge1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB3aWR0aDogMTAwJTtcclxuICBtYXJnaW46IDEwcHg7XHJcbn1cclxuLnRvcG5hdiAuYnRuIHtcclxuICB3aWR0aDogODAlO1xyXG4gIGJhY2tncm91bmQtY29sb3I6IHJnYigxMTcsIDMsIDMpO1xyXG4gIGNvbG9yOiAjZGRkO1xyXG4gIGJvcmRlcjogbm9uZTtcclxuICBwYWRkaW5nOiA1cHggMTVweDtcclxuICBib3JkZXItcmFkaXVzOiAxMHB4IDMwcHg7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcbi5tYWluLWNvbnRlbnQge1xyXG4gIG1hcmdpbi10b3A6IDE1MHB4O1xyXG59XHJcbi5mb290ZXIge1xyXG4gIG1hcmdpbi10b3A6IDUwcHg7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIHBhZGRpbmc6IDIwcHg7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiKDIyLCAyMiwgMjIpO1xyXG4gIGNvbG9yOiAjZGRkO1xyXG59XHJcblxyXG4vKiBNZWRpdW0gZGV2aWNlcyAobGFuZHNjYXBlIHRhYmxldHMsIDc2OHB4IGFuZCB1cCkgKi9cclxuQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWluLXdpZHRoOiA3NjhweCkge1xyXG4gIC5maXhlZCB7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcclxuICAgIHBhZGRpbmc6IDAgMTAwcHg7XHJcbiAgfVxyXG4gIC5sb2dvIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gIH1cclxuICAudG9wbmF2IHtcclxuICAgIGRpc3BsYXk6IGlubGluZS1mbGV4O1xyXG4gICAgcGFkZGluZzogMjBweDtcclxuICB9XHJcbiAgLmxlZnQge1xyXG4gICAgdGV4dC1hbGlnbjogbGVmdDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIHdpZHRoOiA3MCU7XHJcbiAgfVxyXG4gIC5yaWdodCB7XHJcbiAgICB3aWR0aDogMjklO1xyXG4gICAgbWFyZ2luOiAwcHg7XHJcbiAgfVxyXG4gIC50b3BuYXYgYnV0dG9uIHtcclxuICAgIHBhZGRpbmc6IDEwcHggMTVweDtcclxuICB9XHJcbiAgLm1haW4tY29udGVudCB7XHJcbiAgICBtYXJnaW4tdG9wOiAxMzBweDtcclxuICB9XHJcbn1cclxuIl19 */";
+    __webpack_exports__["default"] = ".fixed {\r\n  width: 100%;\r\n  margin: 0 auto;\r\n  overflow: hidden;\r\n  text-align: center;\r\n  position: fixed;\r\n  top: 0;\r\n  z-index: 100;\r\n  border-bottom: 5px solid #ddd;\r\n  background-color: #000;\r\n}\r\n.logo {\r\n  width: 50px;\r\n  text-align: center;\r\n  cursor: pointer;\r\n}\r\n.topnav {\r\n  color: rgb(117, 3, 3);\r\n  width: 100%;\r\n}\r\nul {\r\n  list-style-type: none;\r\n}\r\n.left li {\r\n  display: inline-block;\r\n  margin: 10px auto;\r\n}\r\n.left a {\r\n  text-decoration: none;\r\n  padding: 10px;\r\n  color: #ddd;\r\n}\r\n.left a:hover {\r\n  background-color: #ddd;\r\n  color: rgb(117, 3, 3);\r\n}\r\n.right {\r\n  text-align: center;\r\n  width: 100%;\r\n  margin: 10px;\r\n}\r\n.topnav .btn {\r\n  width: 80%;\r\n  background-color: rgb(117, 3, 3);\r\n  color: #ddd;\r\n  border: none;\r\n  padding: 5px 15px;\r\n  border-radius: 10px 30px;\r\n  cursor: pointer;\r\n}\r\n.main-content {\r\n  margin-top: 150px;\r\n}\r\n.footer {\r\n  margin-top: 50px;\r\n  text-align: center;\r\n  width: 100%;\r\n  padding: 20px;\r\n  background-color: rgb(22, 22, 22);\r\n  color: #ddd;\r\n}\r\n/* Medium devices (landscape tablets, 768px and up) */\r\n@media only screen and (min-width: 768px) {\r\n  .fixed {\r\n    display: inline-flex;\r\n    padding: 0 100px;\r\n  }\r\n  .logo {\r\n    width: 100%;\r\n  }\r\n  .topnav {\r\n    display: inline-flex;\r\n    padding: 20px;\r\n  }\r\n  .left {\r\n    text-align: left;\r\n    display: inline-block;\r\n    width: 70%;\r\n  }\r\n  .right {\r\n    width: 29%;\r\n    margin: 0px;\r\n  }\r\n  .topnav button {\r\n    padding: 10px 15px;\r\n  }\r\n  .main-content {\r\n    margin-top: 130px;\r\n  }\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXO0VBQ1gsY0FBYztFQUNkLGdCQUFnQjtFQUNoQixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLE1BQU07RUFDTixZQUFZO0VBQ1osNkJBQTZCO0VBQzdCLHNCQUFzQjtBQUN4QjtBQUNBO0VBQ0UsV0FBVztFQUNYLGtCQUFrQjtFQUNsQixlQUFlO0FBQ2pCO0FBQ0E7RUFDRSxxQkFBcUI7RUFDckIsV0FBVztBQUNiO0FBQ0E7RUFDRSxxQkFBcUI7QUFDdkI7QUFDQTtFQUNFLHFCQUFxQjtFQUNyQixpQkFBaUI7QUFDbkI7QUFDQTtFQUNFLHFCQUFxQjtFQUNyQixhQUFhO0VBQ2IsV0FBVztBQUNiO0FBQ0E7RUFDRSxzQkFBc0I7RUFDdEIscUJBQXFCO0FBQ3ZCO0FBQ0E7RUFDRSxrQkFBa0I7RUFDbEIsV0FBVztFQUNYLFlBQVk7QUFDZDtBQUNBO0VBQ0UsVUFBVTtFQUNWLGdDQUFnQztFQUNoQyxXQUFXO0VBQ1gsWUFBWTtFQUNaLGlCQUFpQjtFQUNqQix3QkFBd0I7RUFDeEIsZUFBZTtBQUNqQjtBQUNBO0VBQ0UsaUJBQWlCO0FBQ25CO0FBQ0E7RUFDRSxnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBQ2xCLFdBQVc7RUFDWCxhQUFhO0VBQ2IsaUNBQWlDO0VBQ2pDLFdBQVc7QUFDYjtBQUVBLHFEQUFxRDtBQUNyRDtFQUNFO0lBQ0Usb0JBQW9CO0lBQ3BCLGdCQUFnQjtFQUNsQjtFQUNBO0lBQ0UsV0FBVztFQUNiO0VBQ0E7SUFDRSxvQkFBb0I7SUFDcEIsYUFBYTtFQUNmO0VBQ0E7SUFDRSxnQkFBZ0I7SUFDaEIscUJBQXFCO0lBQ3JCLFVBQVU7RUFDWjtFQUNBO0lBQ0UsVUFBVTtJQUNWLFdBQVc7RUFDYjtFQUNBO0lBQ0Usa0JBQWtCO0VBQ3BCO0VBQ0E7SUFDRSxpQkFBaUI7RUFDbkI7QUFDRiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZpeGVkIHtcclxuICB3aWR0aDogMTAwJTtcclxuICBtYXJnaW46IDAgYXV0bztcclxuICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICBwb3NpdGlvbjogZml4ZWQ7XHJcbiAgdG9wOiAwO1xyXG4gIHotaW5kZXg6IDEwMDtcclxuICBib3JkZXItYm90dG9tOiA1cHggc29saWQgI2RkZDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDAwO1xyXG59XHJcbi5sb2dvIHtcclxuICB3aWR0aDogNTBweDtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcbi50b3BuYXYge1xyXG4gIGNvbG9yOiByZ2IoMTE3LCAzLCAzKTtcclxuICB3aWR0aDogMTAwJTtcclxufVxyXG51bCB7XHJcbiAgbGlzdC1zdHlsZS10eXBlOiBub25lO1xyXG59XHJcbi5sZWZ0IGxpIHtcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgbWFyZ2luOiAxMHB4IGF1dG87XHJcbn1cclxuLmxlZnQgYSB7XHJcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xyXG4gIHBhZGRpbmc6IDEwcHg7XHJcbiAgY29sb3I6ICNkZGQ7XHJcbn1cclxuLmxlZnQgYTpob3ZlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2RkZDtcclxuICBjb2xvcjogcmdiKDExNywgMywgMyk7XHJcbn1cclxuLnJpZ2h0IHtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgbWFyZ2luOiAxMHB4O1xyXG59XHJcbi50b3BuYXYgLmJ0biB7XHJcbiAgd2lkdGg6IDgwJTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMTE3LCAzLCAzKTtcclxuICBjb2xvcjogI2RkZDtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgcGFkZGluZzogNXB4IDE1cHg7XHJcbiAgYm9yZGVyLXJhZGl1czogMTBweCAzMHB4O1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG4ubWFpbi1jb250ZW50IHtcclxuICBtYXJnaW4tdG9wOiAxNTBweDtcclxufVxyXG4uZm9vdGVyIHtcclxuICBtYXJnaW4tdG9wOiA1MHB4O1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICB3aWR0aDogMTAwJTtcclxuICBwYWRkaW5nOiAyMHB4O1xyXG4gIGJhY2tncm91bmQtY29sb3I6IHJnYigyMiwgMjIsIDIyKTtcclxuICBjb2xvcjogI2RkZDtcclxufVxyXG5cclxuLyogTWVkaXVtIGRldmljZXMgKGxhbmRzY2FwZSB0YWJsZXRzLCA3NjhweCBhbmQgdXApICovXHJcbkBtZWRpYSBvbmx5IHNjcmVlbiBhbmQgKG1pbi13aWR0aDogNzY4cHgpIHtcclxuICAuZml4ZWQge1xyXG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgICBwYWRkaW5nOiAwIDEwMHB4O1xyXG4gIH1cclxuICAubG9nbyB7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICB9XHJcbiAgLnRvcG5hdiB7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcclxuICAgIHBhZGRpbmc6IDIwcHg7XHJcbiAgfVxyXG4gIC5sZWZ0IHtcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgICB3aWR0aDogNzAlO1xyXG4gIH1cclxuICAucmlnaHQge1xyXG4gICAgd2lkdGg6IDI5JTtcclxuICAgIG1hcmdpbjogMHB4O1xyXG4gIH1cclxuICAudG9wbmF2IGJ1dHRvbiB7XHJcbiAgICBwYWRkaW5nOiAxMHB4IDE1cHg7XHJcbiAgfVxyXG4gIC5tYWluLWNvbnRlbnQge1xyXG4gICAgbWFyZ2luLXRvcDogMTMwcHg7XHJcbiAgfVxyXG59XHJcbiJdfQ== */";
     /***/
   },
 
@@ -1021,10 +1021,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selector: 'app-root',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./app.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html")).default,
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html"))["default"],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./app.component.css */
-      "./src/app/app.component.css")).default]
+      "./src/app/app.component.css"))["default"]]
     })], AppComponent);
     /***/
   },
@@ -1341,10 +1341,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selector: 'app-favourite-movies',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./favourite-movies.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/movie/favourite-movies/favourite-movies.component.html")).default,
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/movie/favourite-movies/favourite-movies.component.html"))["default"],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./favourite-movies.component.css */
-      "./src/app/movie/favourite-movies/favourite-movies.component.css")).default]
+      "./src/app/movie/favourite-movies/favourite-movies.component.css"))["default"]]
     })], FavouriteMoviesComponent);
     /***/
   },
@@ -1539,10 +1539,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selector: 'app-movie-detail',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./movie-detail.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/movie/movie-detail/movie-detail.component.html")).default,
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/movie/movie-detail/movie-detail.component.html"))["default"],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./movie-detail.component.css */
-      "./src/app/movie/movie-detail/movie-detail.component.css")).default]
+      "./src/app/movie/movie-detail/movie-detail.component.css"))["default"]]
     })], MovieDetailComponent);
     /***/
   },
@@ -1645,8 +1645,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       _createClass(MovieListComponent, [{
+        key: "movieFilter",
+        get: function get() {
+          return this._movieFilter;
+        },
+        set: function set(value) {
+          this._movieFilter = value;
+          this.filteredMovies = this.movieFilter ? this.performFilter(this.movieFilter) : this.movies;
+        } // These is settings for pagination
+
+      }, {
         key: "onPageChange",
-        // These is settings for pagination
         value: function onPageChange(event) {
           this.config.currentPage = event;
         }
@@ -1696,15 +1705,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           return this.filteredMovies;
         }
-      }, {
-        key: "movieFilter",
-        get: function get() {
-          return this._movieFilter;
-        },
-        set: function set(value) {
-          this._movieFilter = value;
-          this.filteredMovies = this.movieFilter ? this.performFilter(this.movieFilter) : this.movies;
-        }
       }]);
 
       return MovieListComponent;
@@ -1722,10 +1722,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selector: 'app-movie-list',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./movie-list.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/movie/movie-list/movie-list.component.html")).default,
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/movie/movie-list/movie-list.component.html"))["default"],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./movie-list.component.css */
-      "./src/app/movie/movie-list/movie-list.component.css")).default]
+      "./src/app/movie/movie-list/movie-list.component.css"))["default"]]
     })], MovieListComponent);
     /***/
   },
@@ -2011,14 +2011,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.http = http;
         this.userId = localStorage.getItem('userId');
         this.token = localStorage.getItem('token');
-        this.favMovieUrl = 'https://safe-crag-24653.herokuapp.com/movie';
+        this.favMovieUrl = 'https://mini-netflix-by-joy.herokuapp.com/movie';
       }
 
       _createClass(FavouriteMoviesService, [{
         key: "addFavMovies",
         value: function addFavMovies(data) {
           var access_token = this.token;
-          var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Authorization', "Bearer ".concat(access_token));
+          var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Authorization', "".concat(access_token));
           return this.http.post(this.favMovieUrl, data, {
             headers: headers
           });
@@ -2027,7 +2027,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         key: "getFavMovies",
         value: function getFavMovies(userId) {
           var access_token = this.token;
-          var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Authorization', "Bearer ".concat(access_token));
+          var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Authorization', "".concat(access_token));
           return this.http.get("".concat(this.favMovieUrl, "/").concat(userId), {
             headers: headers
           }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (data) {
@@ -2038,8 +2038,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         key: "deleteFavMovies",
         value: function deleteFavMovies(movieId, userId) {
           var access_token = this.token;
-          var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Authorization', "Bearer ".concat(access_token));
-          return this.http.delete("".concat(this.favMovieUrl, "/").concat(movieId, "/").concat(userId), {
+          var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]().set('Authorization', "".concat(access_token));
+          return this.http["delete"]("".concat(this.favMovieUrl, "/").concat(movieId, "/").concat(userId), {
             headers: headers
           }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (data) {
             return JSON.stringify(data);
@@ -2258,10 +2258,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selector: 'app-page-not-found',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./page-not-found.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/page-not-found/page-not-found.component.html")).default,
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/page-not-found/page-not-found.component.html"))["default"],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./page-not-found.component.css */
-      "./src/app/page-not-found/page-not-found.component.css")).default]
+      "./src/app/page-not-found/page-not-found.component.css"))["default"]]
     })], PageNotFoundComponent);
     /***/
   },
@@ -2395,14 +2395,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.http = http;
         this.router = router;
         this.isLoggedIn = false;
-        this.url = 'https://safe-crag-24653.herokuapp.com/user';
-        this.signinUrl = 'https://safe-crag-24653.herokuapp.com/user/signin';
+        this.signupUrl = 'https://mini-netflix-by-joy.herokuapp.com/user/signup';
+        this.signinUrl = 'https://mini-netflix-by-joy.herokuapp.com/user/signin';
       }
 
       _createClass(AuthService, [{
         key: "addUser",
         value: function addUser(userData) {
-          return this.http.post(this.url, userData);
+          return this.http.post(this.signupUrl, userData);
         }
       }, {
         key: "getUser",
@@ -2562,10 +2562,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selector: 'app-signin',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./signin.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/user/signin/signin.component.html")).default,
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/user/signin/signin.component.html"))["default"],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./signin.component.css */
-      "./src/app/user/signin/signin.component.css")).default]
+      "./src/app/user/signin/signin.component.css"))["default"]]
     })], SigninComponent);
     /***/
   },
@@ -2679,10 +2679,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selector: 'app-signup',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! raw-loader!./signup.component.html */
-      "./node_modules/raw-loader/dist/cjs.js!./src/app/user/signup/signup.component.html")).default,
+      "./node_modules/raw-loader/dist/cjs.js!./src/app/user/signup/signup.component.html"))["default"],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./signup.component.css */
-      "./src/app/user/signup/signup.component.css")).default]
+      "./src/app/user/signup/signup.component.css"))["default"]]
     })], SignupComponent);
     /***/
   },
@@ -2779,7 +2779,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["enableProdMode"])();
     }
 
-    Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"]).catch(function (err) {
+    Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"])["catch"](function (err) {
       return console.error(err);
     });
     /***/
@@ -2796,7 +2796,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   /***/
   function _(module, exports, __webpack_require__) {
     module.exports = __webpack_require__(
-    /*! C:\Users\Tim\Desktop\mini-netflix-movie-app\src\main.ts */
+    /*! C:\Users\JOY\Desktop\My Projects\mini-netflix-movie-app\src\main.ts */
     "./src/main.ts");
     /***/
   }

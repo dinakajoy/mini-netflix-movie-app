@@ -17,14 +17,14 @@ export class FavouriteMoviesService {
 
   addFavMovies(data): Observable<any[]> {
     let access_token = this.token;
-    let headers = new HttpHeaders().set('Authorization', `${access_token}`);
-    return this.http.post<any[]>(this.favMovieUrl, data, { headers: headers })
+    let newData = {...data, access_token};
+    return this.http.post<any[]>(this.favMovieUrl, newData)
   }
 
   getFavMovies(userId): Observable<any> {
     let access_token = this.token;
-    let headers = new HttpHeaders().set('Authorization', `${access_token}`);
-    return this.http.get<any>(`${this.favMovieUrl}/${userId}`, { headers: headers })
+    let newData = {userId, access_token};
+    return this.http.post<any>(`${this.favMovieUrl}/all/${userId}`, newData)
     .pipe(
       tap(data => JSON.stringify(data)),
       catchError(this.handleError)
@@ -33,8 +33,8 @@ export class FavouriteMoviesService {
 
   deleteFavMovies(movieId, userId): Observable<any[]> {
     let access_token = this.token;
-    let headers = new HttpHeaders().set('Authorization', `${access_token}`);
-    return this.http.delete<any[]>(`${this.favMovieUrl}/${movieId}/${userId}`, { headers: headers })
+    let newData = {userId, movieId, access_token};
+    return this.http.delete<any[]>(`${this.favMovieUrl}/${movieId}`, newData)
       .pipe(
         tap(data => JSON.stringify(data)),
         catchError(this.handleError)

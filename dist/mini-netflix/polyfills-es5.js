@@ -1,4 +1,4 @@
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
@@ -13904,7 +13904,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       var symbolPrototype = SymbolWrapper.prototype = NativeSymbol.prototype;
       symbolPrototype.constructor = SymbolWrapper;
       var symbolToString = symbolPrototype.toString;
-      var native = String(NativeSymbol('test')) == 'Symbol(test)';
+
+      var _native = String(NativeSymbol('test')) == 'Symbol(test)';
+
       var regexp = /^Symbol\((.*)\)[^)]+$/;
       defineProperty(symbolPrototype, 'description', {
         configurable: true,
@@ -13912,7 +13914,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var symbol = isObject(this) ? this.valueOf() : this;
           var string = symbolToString.call(symbol);
           if (has(EmptyStringDescriptionStore, symbol)) return '';
-          var desc = native ? string.slice(7, -1) : string.replace(regexp, '$1');
+          var desc = _native ? string.slice(7, -1) : string.replace(regexp, '$1');
           return desc === '' ? undefined : desc;
         }
       });
@@ -16622,13 +16624,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       if (mod != null) for (var k in mod) {
         if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
       }
-      result.default = mod;
+      result["default"] = mod;
       return result;
     }
 
     function __importDefault(mod) {
       return mod && mod.__esModule ? mod : {
-        default: mod
+        "default": mod
       };
     }
 
@@ -16719,6 +16721,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         _createClass(Zone, [{
+          key: "parent",
+          get: function get() {
+            return this._parent;
+          }
+        }, {
+          key: "name",
+          get: function get() {
+            return this._name;
+          }
+        }, {
           key: "get",
           value: function get(key) {
             var zone = this.getZoneWith(key);
@@ -16951,35 +16963,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               zoneDelegates[i]._updateTaskCount(task.type, count);
             }
           }
-        }, {
-          key: "parent",
-          get: function get() {
-            return this._parent;
-          }
-        }, {
-          key: "name",
-          get: function get() {
-            return this._name;
-          }
         }], [{
           key: "assertZonePatched",
           value: function assertZonePatched() {
             if (global['Promise'] !== patches['ZoneAwarePromise']) {
               throw new Error('Zone.js has detected that ZoneAwarePromise `(window|global).Promise` ' + 'has been overwritten.\n' + 'Most likely cause is that a Promise polyfill has been loaded ' + 'after Zone.js (Polyfilling Promise api is not necessary when zone.js is loaded. ' + 'If you must load one, do so before loading zone.js.)');
-            }
-          }
-        }, {
-          key: "__load_patch",
-          value: function __load_patch(name, fn) {
-            if (patches.hasOwnProperty(name)) {
-              if (checkDuplicate) {
-                throw Error('Already loaded patch: ' + name);
-              }
-            } else if (!global['__Zone_disable_' + name]) {
-              var perfName = 'Zone:' + name;
-              mark(perfName);
-              patches[name] = fn(global, Zone, _api);
-              performanceMeasure(perfName, perfName);
             }
           }
         }, {
@@ -17002,6 +16990,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           key: "currentTask",
           get: function get() {
             return _currentTask;
+          }
+        }, {
+          key: "__load_patch",
+          value: function __load_patch(name, fn) {
+            if (patches.hasOwnProperty(name)) {
+              if (checkDuplicate) {
+                throw Error('Already loaded patch: ' + name);
+              }
+            } else if (!global['__Zone_disable_' + name]) {
+              var perfName = 'Zone:' + name;
+              mark(perfName);
+              patches[name] = fn(global, Zone, _api);
+              performanceMeasure(perfName, perfName);
+            }
           }
         }]);
 
@@ -17221,6 +17223,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         _createClass(ZoneTask, [{
+          key: "zone",
+          get: function get() {
+            return this._zone;
+          }
+        }, {
+          key: "state",
+          get: function get() {
+            return this._state;
+          }
+        }, {
           key: "cancelScheduleRequest",
           value: function cancelScheduleRequest() {
             this._transitionTo(notScheduled, scheduling);
@@ -17259,16 +17271,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               zone: this.zone.name,
               runCount: this.runCount
             };
-          }
-        }, {
-          key: "zone",
-          get: function get() {
-            return this._zone;
-          }
-        }, {
-          key: "state",
-          get: function get() {
-            return this._state;
           }
         }], [{
           key: "invokeTask",
@@ -17781,6 +17783,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         _createClass(ZoneAwarePromise, [{
+          key: Symbol.toStringTag,
+          get: function get() {
+            return 'Promise';
+          }
+        }, {
           key: "then",
           value: function then(onFulfilled, onRejected) {
             var chainPromise = new this.constructor(null);
@@ -17813,11 +17820,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             }
 
             return chainPromise;
-          }
-        }, {
-          key: Symbol.toStringTag,
-          get: function get() {
-            return 'Promise';
           }
         }], [{
           key: "toString",
@@ -20743,7 +20745,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   /***/
   function _(module, exports, __webpack_require__) {
     __webpack_require__(
-    /*! C:\Users\Tim\Desktop\mini-netflix-movie-app\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\es5-polyfills.js */
+    /*! C:\Users\JOY\Desktop\My Projects\mini-netflix-movie-app\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\es5-polyfills.js */
     "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/es5-polyfills.js");
 
     __webpack_require__(
@@ -20751,15 +20753,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     "./node_modules/zone.js/dist/zone-legacy.js");
 
     __webpack_require__(
-    /*! C:\Users\Tim\Desktop\mini-netflix-movie-app\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\jit-polyfills.js */
+    /*! C:\Users\JOY\Desktop\My Projects\mini-netflix-movie-app\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\jit-polyfills.js */
     "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
 
     __webpack_require__(
-    /*! C:\Users\Tim\Desktop\mini-netflix-movie-app\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\es5-jit-polyfills.js */
+    /*! C:\Users\JOY\Desktop\My Projects\mini-netflix-movie-app\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\es5-jit-polyfills.js */
     "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/es5-jit-polyfills.js");
 
     module.exports = __webpack_require__(
-    /*! C:\Users\Tim\Desktop\mini-netflix-movie-app\src\polyfills.ts */
+    /*! C:\Users\JOY\Desktop\My Projects\mini-netflix-movie-app\src\polyfills.ts */
     "./src/polyfills.ts");
     /***/
   }
