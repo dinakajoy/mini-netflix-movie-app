@@ -19,12 +19,14 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
   const [favMovies, setFavMovies] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [moviesPerPage] = useState<number>(12);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // Get current posts
   const indexOfLastMovie:number = currentPage * moviesPerPage;
   const indexOfFirstMovie:number  = indexOfLastMovie - moviesPerPage;
   let currentMovies:IMovie[] = movies.slice(indexOfFirstMovie, indexOfLastMovie);
 
   useEffect(() => {
+    setIsLoading(true);
     setMovies(loadData);
     if(signedIn) {
       let userId:string | null = localStorage.getItem('userId');
@@ -36,6 +38,7 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
           }
         });
     }
+    setIsLoading(false);
   }, [signedIn, token]);
 
   const searchByTitle = (query: string):void => {
@@ -60,7 +63,7 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
   return (
     <>
       <Title title={'Latest Movies and More...'} />
-      <section className="movies-events">
+      { !isLoading && <section className="movies-events">
         <div className="search">
           <input type="search" placeholder="Search" onChange={(e) => searchByTitle(e.target.value)} />
         </div>
@@ -69,9 +72,9 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
           <i className="fa fa-sort-alpha-asc fa-1.5x" onClick={() => sortAsc()}> </i>
           <i className="fa fa-sort-alpha-desc fa-1.5x" onClick={() => sortDesc()}> </i>
         </div>
-      </section>
+      </section> }
 
-      <section className="movie-row">
+      { !isLoading && <section className="movie-row">
         {currentMovies.length > 0 && currentMovies.map((cmovie:any) => (
           <div key={cmovie.objectId} className="wrapper">
             <img src={ cmovie.image.url } alt={ cmovie.image.name } title={ cmovie.title } className="grid-img" />
@@ -92,13 +95,15 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
             </Link>
           </div>
         )) }
-      </section>
+      </section> }
 
-      <Pagination
+      { !isLoading && <Pagination
         moviesPerPage={moviesPerPage}
         totalMovies={movies.length}
         paginate={paginate}
-      />
+      /> }
+
+      { isLoading && <h2 className="loading">Loading... </h2> }
     </>
   )
 };

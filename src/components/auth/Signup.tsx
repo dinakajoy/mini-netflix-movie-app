@@ -14,6 +14,7 @@ const Signup: React.FC = () => {
   const [error, setError] = useState('');
   const [error2, setError2] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, errors } = useForm<IUser>();
 
@@ -31,18 +32,22 @@ const Signup: React.FC = () => {
   };
 
   const onSubmit = async (data: IUser) => {
+    setIsLoading(true);
     const result = await submitForm(data);
     if(result.error) {
       setSuccess('');
       if(result.error.code === 11000) {
         setError('');
+        setIsLoading(false);
         setError2('Email has already been registered.');
       } else {
         setError2('');
+        setIsLoading(false);
         setError('Sorry, there was an error making a request.');
       }
     } else {
       setError('');
+      setIsLoading(false);
       setSuccess(result.message);
     }
   };
@@ -76,7 +81,7 @@ const Signup: React.FC = () => {
         <input type="password" className="form-control" name="password" placeholder="Password" ref={register({ required: true })} />
         {errors.password && <span className="error">Password is required.</span>}
       </div>
-      <button type="submit" className="btn-back">Signup</button>
+      <button type="submit" className="btn-back">{ isLoading ? 'Submitting...' : 'Sign Up' }</button>
     </form>
   )
 };

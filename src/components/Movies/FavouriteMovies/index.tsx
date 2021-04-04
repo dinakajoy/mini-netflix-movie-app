@@ -27,6 +27,7 @@ const FavouriteMovies:React.FC<Props> = ({ token }: Props) => {
   let currentMovies:IMovie[] = favMoviesList.slice(indexOfFirstMovie, indexOfLastMovie);
 
   useEffect(() => {
+    setLoading(true);
     let allMovies:any = moviesapi;
     let favoriteList:any = [];
     let favoriteMovies:any = [];
@@ -77,43 +78,49 @@ const FavouriteMovies:React.FC<Props> = ({ token }: Props) => {
   return (
     <>
       <Title title={'My Favourite Movies'} />
-      { favMoviesList.length > 1 && <section className="movies-events">
-        <div className="search">
-          <input type="search" placeholder="Search" onChange={(e) => searchByTitle(e.target.value)} />
-        </div>
-        <div className="sort">
-          Sort By Title:
-          <i className="fa fa-sort-alpha-asc fa-1.5x" onClick={() => sortAsc()}> </i>
-          <i className="fa fa-sort-alpha-desc fa-1.5x" onClick={() => sortDesc()}> </i>
-        </div>
-      </section> }
 
-      { loading && <h2>Loading...</h2> }
-      { favMoviesList.length < 1 && <div className="alert alert-danger">
-        Sorry: You Have No Favourite Movie. <br />
-        But Does It Infer That Our Movies Don't Interest You Enough???
-        <p><Link to="/" style={{color:'#000'}}>Ok, Let Me Add Favourite Movies</Link></p></div> }
+      { loading && <h2 className="loading">Loading... </h2> }
 
-      <section className="movie-row">
-        { currentMovies.length > 0 && currentMovies.map((cmovie:any) => (
-          <div key={cmovie.objectId} className="wrapper">
-            <img src={ cmovie.image.url } alt={ cmovie.image.name } title={ cmovie.title } className="grid-img" />
-            <div className="favourite"><i className="fa fa-close" title="Remove From Favourites" onClick={(event: React.MouseEvent<HTMLElement>) => removeFavouriteMovie(cmovie.objectId)}></i></div>
-            <Link to={`/movies/${cmovie.objectId}`}>
-              <div className="overlay">
-                <h4 className="top">{ cmovie.title }</h4>
-                <small className="bottom">Year: { cmovie.releaseYear }</small>
+      { !loading && 
+        <>
+          { favMoviesList.length > 0 && <section className="movies-events">
+            <div className="search">
+              <input type="search" placeholder="Search" onChange={(e) => searchByTitle(e.target.value)} />
+            </div>
+            <div className="sort">
+              Sort By Title:
+              <i className="fa fa-sort-alpha-asc fa-1.5x" onClick={() => sortAsc()}> </i>
+              <i className="fa fa-sort-alpha-desc fa-1.5x" onClick={() => sortDesc()}> </i>
+            </div>
+          </section> }
+
+          { favMoviesList.length < 1 && <div className="alert alert-danger">
+            Sorry: You Have No Favourite Movie. <br />
+            But Does It Infer That Our Movies Don't Interest You Enough???
+            <p><Link to="/" style={{color:'#000'}}>Ok, Let Me Add Favourite Movies</Link></p></div> }
+
+          <section className="movie-row">
+            { currentMovies.length > 0 && currentMovies.map((cmovie:any) => (
+              <div key={cmovie.objectId} className="wrapper">
+                <img src={ cmovie.image.url } alt={ cmovie.image.name } title={ cmovie.title } className="grid-img" />
+                <div className="favourite"><i className="fa fa-close" title="Remove From Favourites" onClick={(event: React.MouseEvent<HTMLElement>) => removeFavouriteMovie(cmovie.objectId)}></i></div>
+                <Link to={`/movies/${cmovie.objectId}`}>
+                  <div className="overlay">
+                    <h4 className="top">{ cmovie.title }</h4>
+                    <small className="bottom">Year: { cmovie.releaseYear }</small>
+                  </div>
+                </Link>
               </div>
-            </Link>
-          </div>
-        )) }
-      </section>
+            )) }
+          </section>
 
-      { favMoviesList.length > 12 && <Pagination
-        moviesPerPage={moviesPerPage}
-        totalMovies={favMoviesList.length}
-        paginate={paginate}
-      /> }
+          { favMoviesList.length > 12 && <Pagination
+            moviesPerPage={moviesPerPage}
+            totalMovies={favMoviesList.length}
+            paginate={paginate}
+          /> }
+        </>
+       }
     </>
   )
 };

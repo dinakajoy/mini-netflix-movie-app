@@ -20,6 +20,7 @@ const Signin: React.FC<Props> = ({ token, isLoggedIn }: Props) => {
   const [error, setError] = useState('');
   const [error2, setError2] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, errors } = useForm<IUser>();
 
@@ -37,19 +38,23 @@ const Signin: React.FC<Props> = ({ token, isLoggedIn }: Props) => {
   };
 
   const onSubmit = async (data: IUser) => {
+    setIsLoading(true);
     const result = await submitForm(data);
     if(result.error) {
       setSuccess('');
       if(result.error === 'User not found!') {
         setError('');
+        setIsLoading(false);
         setError2('Sorry, email has not been registered.');
       } else if(result.error === 'Incorrect password!') {
         setError2('');
+        setIsLoading(false);
         setError('Incorrect password!');
       }
     } else {
       setError('');
       setError2('');
+      setIsLoading(false);
       isLoggedIn(result.token, result.userId);
       history.push("/");
     }
@@ -78,8 +83,8 @@ const Signin: React.FC<Props> = ({ token, isLoggedIn }: Props) => {
         <input type="password" className="form-control" name="password" placeholder="Password" ref={register({ required: true })} />
         {errors.password && <span className="error">You do have a password.</span>}
       </div>
-      <button type="submit" className="btn-back">Signin</button>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't Have An Account? <Link to="/signup" type="submit" className="signup-btn">Sign Up</Link>
+      <button type="submit" className="btn-back">{ isLoading ? 'Submitting...' : 'Sign In' }</button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Don't Have An Account? <Link to="/signup" type="submit" className="signup-btn"> Sign Up</Link>
     </form>
   )
 }

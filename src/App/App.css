@@ -171,3 +171,12 @@ ul {
   border: 0;
   outline: 0;
 }
+
+/* Loading */
+.loading {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
