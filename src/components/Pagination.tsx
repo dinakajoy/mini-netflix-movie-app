@@ -14,14 +14,16 @@ const Pagination = ({ moviesPerPage, totalMovies, paginate }:Props) => {
     pageNumbers.push(i);
   }
 
+  const handlePaginate = (number:number):void => {
+    paginate(number);
+    window.scrollTo(0, 0);
+  }
+
   return (
     <div className="pagination">
       <i className='fa fa-angle-double-left'></i>
       {pageNumbers.map(number => (
-        // <button key={number} onClick={() => paginate(number)} className='page-link'>
-        //   {number}
-        // </button>
-        <NavLink key={number} to='/' onClick={() => paginate(number)} className='page-link' activeClassName="active-navlink">
+        <NavLink key={number} to='/' onClick={() => handlePaginate(number)} className='page-link' activeClassName="active-navlink">
         {number}
       </NavLink>
       ))}
