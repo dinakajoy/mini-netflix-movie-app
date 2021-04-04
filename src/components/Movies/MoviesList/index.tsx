@@ -8,7 +8,7 @@ import Title from '../../common/Title';
 import './MovieList.css';
 
 type Props = {
-  token: string;
+  token: string | null;
   signedIn: boolean;
 }
 

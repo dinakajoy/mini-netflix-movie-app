@@ -8,7 +8,7 @@ import Title from '../../common/Title';
 import '../MoviesList/MovieList.css';
 
 type Props = {
-  token: string;
+  token: string | null;
 }
   
 const FavouriteMovies:React.FC<Props> = ({ token }: Props) => {

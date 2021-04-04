@@ -1,26 +1,14 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 // import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import App from './index';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 
-// let container: HTMLDivElement | null = null;
-// beforeEach(() => {
-//   container = document.createElement("div");
-//   document.body.appendChild(container);
-// });
-
-// afterEach(() => {
-//   unmountComponentAtNode(container);
-//   container.remove();
-//   container = null;
-// });
-
-describe('app component', () => {
+describe('App component', () => {
   it("renders without crashing", () => {
     const div = document.createElement("div");
     ReactDOM.render(
@@ -32,7 +20,7 @@ describe('app component', () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it("renders header component", () => {
+  it("renders Header component", () => {
     const signedIn: boolean = false;
     const handleLogout = (): void => {
       localStorage.clear();
@@ -42,7 +30,7 @@ describe('app component', () => {
     });
   });
 
-  it("renders footer component", () => {
+  it("renders Footer component", () => {
     act(() => {
       render(<Footer />);
     });

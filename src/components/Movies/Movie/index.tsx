@@ -10,7 +10,7 @@ interface ParamTypes {
 }
 
 type Props = {
-  token: string;
+  token: string | null;
   signedIn: boolean;
 }
 
