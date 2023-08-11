@@ -3,7 +3,7 @@ Mini-Netflix Movie App
 A Movie App built using React and TypeScript, where users can view recent movies and add or remove favourite movies if registered and logged in. 
 
 Back End was developed with Node/Express and hosted on Heroku. ---> [API Link](https://github.com/dinakajoy/mini-netflix-api)   
-Api Docs [link](https://mini-netflix-by-joy.herokuapp.com/docs)
+Api Docs [link](https://mini-netflix-api.onrender.com/docs)
 
 Authenticated with JWT and bcrypt 
 
