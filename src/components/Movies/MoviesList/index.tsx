@@ -43,7 +43,7 @@ const MoviesList:React.FC<Props> = ({ token, signedIn }: Props) => {
 
   const searchByTitle = (query: string):void => {
     const mv:IMovie[] = loadData();
-    let moviesBasedOnSearch:IMovie[] = mv.filter((movie:IMovie) => movie.title.toLocaleLowerCase().indexOf(query) !== -1);
+    let moviesBasedOnSearch:IMovie[] = mv.filter((movie:IMovie) =>  movie.title.toLowerCase().includes(query.toLowerCase()));
     setMovies([...moviesBasedOnSearch]);
   };
 

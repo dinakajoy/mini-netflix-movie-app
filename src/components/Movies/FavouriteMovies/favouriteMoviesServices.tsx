@@ -1,5 +1,4 @@
-// const favMovieUrl = 'https://mini-netflix-api.onrender.com/movie';
-const favMovieUrl = 'https://mini-netflix-api.onrender.com/movie';
+const favMovieUrl = `${process.env.REACT_APP_API_URL}/movie`;
 
 export const getFavouriteMovie = async (data:any) => {
   try {

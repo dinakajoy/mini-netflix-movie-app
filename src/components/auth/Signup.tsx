@@ -19,7 +19,7 @@ const Signup: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<IUser>();
 
   const submitForm = async (data: IUser) => {
-    const userRequest = await fetch('https://mini-netflix-api.onrender.com/user/signup', {
+    const userRequest = await fetch(`${process.env.REACT_APP_API_URL}/user/signup`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

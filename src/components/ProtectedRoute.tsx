@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from "react-router-dom";
 
 type Props = {
   path: string;
-  signedIn: boolean;
   component: React.FC<any>;
-  token: string;
 }
 
-const ProtectedRoute = ({ component: Component, signedIn, token, path, ...rest }: Props) => {
+const ProtectedRoute = ({ component: Component, path, ...rest }: Props) => {
+  const [token] = useState<string | null>(localStorage.getItem("token"))
+
   return (
     <Route path={path} {...rest} render={(props) => {
-      return (signedIn) ? (
+      return (token) ? (
         <Component {...props} token={token} />
       ) : (
         <Redirect

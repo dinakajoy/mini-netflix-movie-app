@@ -13,7 +13,6 @@ import './App.css';
 
 
 const App: React.FC = () => {
-
   const [token, setToken] = useState<string>('');
   const [signedIn, setSignedIn] = useState<boolean>(false);
   
@@ -47,7 +46,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/"><MoviesList token={token} signedIn={signedIn} /></Route>
           <Route path="/movies/:movieId"><Movie token={token} signedIn={signedIn} /></Route>
-          <ProtectedRoute path="/favourites" signedIn={signedIn} token={token} component={FavouriteMovies} />
+          <ProtectedRoute path="/favourites" component={FavouriteMovies} />
           <Route path="/signup" component={Signup} />
           <Route path="/signin"><Signin token={token} isLoggedIn={isLoggedIn} /></Route>
           <Route component={NotFound} />
