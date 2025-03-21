@@ -9,7 +9,7 @@ Authenticated with JWT and bcrypt
 
 Database is on MongoDB 
 
-Website url is https://mini-netflix-by-joy.netlify.com
+Website url is [https://mini-netflix-movie-app.vercel.app](https://mini-netflix-movie-app.vercel.app)
 
 ## Available Scripts
 In the project directory, you can run:
